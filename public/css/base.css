@@ -1,0 +1,76 @@
+@charset "utf-8";
+html,
+body {width: 100%;height: 100%;background: #F9F9F9!important;color:#555;font-size:14px;}
+article,aside,blockquote,body,button,code,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,input,legend,li,menu,nav,ol,p,pre,section,td,textarea,th,ul{margin:0;padding:0}
+body,button,input,select,textarea{font:14px "Hiragino Sans GB","Microsoft Yahei",\5b8b\4f53,Arial,Helvetica,sans-serif;color:#222;}
+/* body{min-width: 1050px;} */
+input,select,textarea{font-size:100%;}textarea{resize:none;}
+table{border-collapse:collapse;border-spacing:0}
+th{text-align:inherit}
+fieldset,img{border:none}
+img{vertical-align: middle;}
+iframe{display:block}
+abbr,acronym{border:none;font-variant:normal}
+del{text-decoration:line-through}
+address,caption,cite,code,dfn,em,th,var{font-weight:500;font-style:normal}
+ol,ul,li{list-style:none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-weight:500;font-size:100%}
+q:after,q:before{content:''}
+sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}
+sup{top:-.5em}
+sub{bottom:-.25em}
+i{font-style:normal}
+a:hover{text-decoration:underline}
+a,ins {text-decoration: none;color: #555555;}
+:focus,a:focus{outline:0}
+.clearfix:after,.clearfix:before{display:table;content:""}
+.clearfix:after{clear:both;overflow:hidden}
+.clearfix{zoom:1}
+.hide{display:none}
+.block{display:block}
+.vh{visibility:hidden}
+.fl,.fr{display:inline}
+.fl{float:left}
+.fr{float:right}
+.center{text-align:center}
+.mt15{margin-top:15px}
+.ml5{margin-left:5px}
+.ft12{font-size:12px !important;}
+.ft14{font-size:14px !important;}
+.ft16{font-size:16px}
+.ft20{font-size:20px}
+.ft26{font-size:26px}
+.ft24{font-size:24px}
+.ft18{font-size:18px}
+.ft32{font-size:32px}
+.ft30{font-size:30px}
+.ft34{font-size:32px}
+.relative{position:relative;top:auto;left:auto;}
+.text_center{text-align:center;}
+.text_right{text-align:right;}
+.text_indent{ text-indent:2em;}
+.bold{font-weight:700}
+.w1000{ width:1000px; margin:auto;}
+table {border-collapse:collapse; border-spacing:0;}
+table {width: 100%;border-collapse: collapse;}
+table th {border: 1px solid #CCCCCC;}
+table td {border: 1px solid #CCCCCC;}
+.ml_10{margin-left:10px;}
+.mt_20{margin-top:20px !important;}.mt_30{margin-top:30px !important;}.ml_5{margin-left:5px !important;}
+.mr_10{margin-right:10px !important;}.mr_15{margin-right:15px !important;}.mr_5{margin-right:5px !important;}.mr_34{margin-right:34px !important;}.ml_34{margin-left:34px !important;}
+/* iveiw默认样式修改 */
+.aside-menu .ivu-menu-dark {
+    background: #282B33;
+    color:#96979A;
+}
+.aside-menu .ivu-menu-vertical .ivu-menu-submenu-title:hover{
+    color:#96979A;
+}
+.aside-menu .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active,
+.aside-menu .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover{
+    color: #FFA200;
+    background: transparent!important;
+}
+
+ 

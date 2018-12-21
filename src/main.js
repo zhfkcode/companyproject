@@ -1,7 +1,10 @@
 import Vue from 'vue'
+import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import '@babel/polyfill'
+import './plugins/iview.js'
 
 Vue.config.productionTip = false
 
