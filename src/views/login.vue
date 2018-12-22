@@ -10,20 +10,20 @@
                     <div class="form-item">
                         <div class="put" :class="{'focus':hasFocus==1}">
                             <span class="avat"></span>
-                            <input v-model="user" type="text" class="pt" placeholder="请输入用户名" @focus="iptFocus(1)" @blur="iptBlur">
+                            <input v-model="user" type="text" class="pt" placeholder="请输入用户名" @focus="iptFocus(1)" @blur="iptBlur" >
                         </div>
                     </div>
                     <div class="form-item">
                         <div class="put" :class="{'focus':hasFocus==2}">
                             <span class="avat pwd"></span>
-                            <input v-model="pwd" type="text" class="pt" placeholder="请输入密码" @focus="iptFocus(2)" @blur="iptBlur">
+                            <input v-model="pwd" type="password" class="pt" placeholder="请输入密码" @focus="iptFocus(2)" @blur="iptBlur">
                         </div>
                     </div>
                     <div class="form-item">
                         <Checkbox v-model="remUer"  class="remember">记住用户名</Checkbox>
                     </div>
                     <div class="form-item">
-                        <input type="button" value="登录" class="login-btn" @click="loginBtn" >
+                        <input type="button" value="登录" class="login-btn" @click="loginBtn">
                         <div class="error-tip" v-if="logErr">
                             <span class="icon"></span>
                             <span >账号或密码错误，请重新输入</span>
@@ -48,18 +48,24 @@ export default {
     },
     methods:{
         loginBtn(){//登录
+         if(!this.user || !this.pwd){
+                this.$Message.error('账号密码不能为空')
+                return false
+            }
         this.logErr = false //影藏错误提示
-        this.axios.post('',{
+        this.axios.post('/api/v1/user/login',{
             user:this.user,
             pwd: this.pwd
         })
         .then((response) => {
             if(this.response.data.code==200){
                 this.$Message.success('登陆成功')
+                localStorage.setItem('token',response.data.data.token)
+                localStorage.setItem('user',this.user)
                 let redPath = this.$route.query.redirect
                 if(redPath){
                     this.$route.replace({
-                        path:''
+                        path:redPath
                     })
                 }else{
                     this.$route.push({
@@ -71,7 +77,9 @@ export default {
                 this.$Message.error('用户名密码错误')
                 this.logErr = true
             }
-        },(err) => {})
+        },(err) => {
+            this.$Message.error('登陆失败，请重试')
+        })
 
         },
         iptFocus(index){

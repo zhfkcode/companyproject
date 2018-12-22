@@ -27,21 +27,21 @@
                     <th>提交时间</th>
                     <th>操作</th>
                </tr>
-                <tr v-for="(item, index) in costList" :key="index">
-                    <td>{{item.acc}}</td>
-                    <td>{{item.type}}</td>
+                <tr v-for="(item, index) in hPhoneList" :key="index">
+                    <td>{{item.acct}}</td>
+                    <td>{{item.repType}}</td>
                     <td>{{item.repAcct}}</td>
                     <td>{{item.repCont}}</td>
-                    <td>{{item.date}}</td>
+                    <td>{{item.subDate}}</td>
                     <td>
-                        <span class="pass">通过</span>
-                        <span class="refuse">拒接</span>
+                        <span class="pass" @click="repPass">通过</span>
+                        <span class="refuse" @click="repRefuse">拒接</span>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="pages">
-            <Page :total="100" show-total show-elevator/>
+            <Page :total="totalPage" show-total show-elevator/>
         </div>
     </div>
 </template>
@@ -52,12 +52,36 @@ export default {
     return {
         account: '',
         type: '',
-        costList: []
+        hPhoneList: [],
+         totalPage: 0,
+        isLoading: false
     };
   },
   mounted(){
-      let mock = [{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'},{acc:'1888655565',type: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', date: '2016-10-12 12:20:35'}]
-      this.costList = mock
+      let mock = [{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},{acct:'1888655565',repType: '旺旺号', repAcct: '1888655565',repCont:'恶意退款', subDate: '2016-10-12 12:20:35'},]
+      this.hPhoneList = mock
+  },
+  methods: {
+      search(){ //搜索查询
+        let params = '?acct='+this.account +"&repType="+this.type
+        this.axios.get('/api/v1/costDetail'+params)
+            .then((response)=>{
+            if(responsed.data.code == 200){
+                this.$Message.success('查询成功')
+                // this.hPhoneList = response.data.data
+                // this.totalPage = this.hPhoneList.length
+                 this.isLoading =false
+            }
+            },()=>{
+                this.$Message.error('查询失败')
+            })
+    },
+    repPass(){
+
+    },
+    repRefuse(){
+        
+    }
   }
 };
 </script>
@@ -77,7 +101,19 @@ export default {
             background: #E8E8E8;
             th{border: 0}
         }
-        td{padding:16px;}
+        td{padding:16px;
+            .pass{
+                color: #0177D5;
+                border-right:1px solid #E5E5E5;
+                padding-right: 10px;
+                cursor: pointer;
+            }
+            .refuse{
+                color: #F64C3E;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        }
         th{padding:16px;}
     }
     .pages{

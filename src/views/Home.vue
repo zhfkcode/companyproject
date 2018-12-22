@@ -8,7 +8,7 @@
       <ul class="user-part">
         <li>
           欢迎您
-          <span class="ml_10">Yolanda</span>
+          <span class="ml_10">{{userName}}</span>
         </li>
         <li>
           <img src="../assets/images/out.png" alt="">
@@ -20,29 +20,27 @@
         <Layout class="layout">
             <Sider hide-trigger class="aside-menu">
               <div>
-              <Menu accordion theme="dark"  width="auto">
-                <Submenu name="1">
+              <Menu accordion theme="dark"  width="auto" active-name="话费明细" :open-names="['sys-cost']" @on-select="selectMenu">
+                <Submenu name="sys-cost">
                   <template slot="title">
                     <Icon type="ios-paper" />
                     充值系统
                   </template>
-                  <MenuItem  name="1-1" to="costDetail">话费明细</MenuItem>
-                  <MenuItem  name="1-2" >话费明细</MenuItem>
-                  <MenuItem  name="1-3" >话费明细</MenuItem>
+                  <MenuItem  name="话费明细" to="costDetail">话费明细</MenuItem>
                 </Submenu>
-                <Submenu name="2">
+                <Submenu name="sys-custom">
                   <template slot="title">
                     <Icon type="ios-paper" />
                     客户管理
                   </template>
-                  <MenuItem  name="1-2" to="customMan" >客户管理</MenuItem>
+                  <MenuItem  name="客户管理" to="customMan" >客户管理</MenuItem>
                 </Submenu>
-                <Submenu name="3">
+                <Submenu name="sys-hphone">
                   <template slot="title">
                     <Icon type="ios-paper" />
                     黑号审核
                   </template>
-                  <MenuItem  name="1-3" to="blankPhone">黑号审核</MenuItem>
+                  <MenuItem  name="黑号审核" to="blankPhone">黑号审核</MenuItem>
                 </Submenu>
               </Menu>
               </div>
@@ -50,10 +48,12 @@
             <Content>
               <Layout class="inner-layout">
                 <Header class="head">
-                  <span class="title">花费明细</span>
+                  <span class="title">{{innerTtitle}}</span>
                 </Header>
                 <Content class="inn-cont">
-                  <router-view></router-view>
+                  <!-- <keep-alive> -->
+                   <router-view></router-view>
+                  <!-- </keep-alive> -->
                 </Content>
                 <Footer class="inn-footer">copyright © 2018 查权重 All rights Reserved</Footer>
               </Layout>
@@ -65,13 +65,22 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "home",
-  components: {
-    HelloWorld
-  }
+  data(){
+    return {
+      userName: '',
+      innerTtitle: '话费明细',
+    }
+  },
+  created(){
+    this.userName = localStorage.getItem('user')
+  },
+  methods:{
+    selectMenu(name){
+      this.innerTtitle = name;
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -122,6 +131,7 @@ export default {
       }
       .inner-layout{
         height: 100%;
+        position: relative;
         .head{
           height: 56px;
           background: #fff;
