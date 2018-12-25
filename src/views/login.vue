@@ -16,7 +16,7 @@
                     <div class="form-item">
                         <div class="put" :class="{'focus':hasFocus==2}">
                             <span class="avat pwd"></span>
-                            <input v-model="pwd" type="password" class="pt" placeholder="请输入密码" @focus="iptFocus(2)" @blur="iptBlur">
+                            <input v-model="pwd" type="password" class="pt" placeholder="请输入密码" @focus="iptFocus(2)" @blur="iptBlur" @keyup.enter="loginBtn">
                         </div>
                     </div>
                     <div class="form-item">
@@ -41,7 +41,7 @@ export default {
         return {
             user: '',
             pwd: '',
-            remUer: false,
+            remUer: true,
             logErr: false,
             hasFocus: 0
         }

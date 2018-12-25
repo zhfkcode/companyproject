@@ -3,18 +3,19 @@
         <ul class="filter-box">
             <li>
                 <label class="mr_10">账号</label>
-                 <Input v-model="account" placeholder="Enter something..." style="width: 200px" />
+                 <Input v-model="account" placeholder="请输入账号" style="width: 200px" />
             </li>
             <li>
                <label class="mr_10">注册时间</label>
-                 <DatePicker v-model="regDate" type="date" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+                 <DatePicker v-model="regDate" :options="regLimit" type="date" placement="bottom-end" placeholder="请选择注册时间" style="width: 200px"></DatePicker>
             </li>
             <li>
                 <label class="mr_10">最近登录时间</label>
-                 <DatePicker  v-model="recentDate" type="date" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+                 <DatePicker  v-model="recentDate" :options="recentLimit" type="date" placement="bottom-end" placeholder="请选择最近登录时间" style="width: 200px"></DatePicker>
             </li>
             <li>
                  <Button type="primary"  @click="search">查询</Button>
+                  <Button style="margin-left:70px;"  @click="exportData">表格导出</Button>
             </li>
         </ul>
         <div class="table-box">
@@ -38,13 +39,21 @@
             </table>
         </div>
         <div class="pages">
-            <Page :total="totalPage" show-total show-elevator/>
+            <Page :total="totalPage" show-total show-elevator @on-change="pageChange"/>
         </div>
-        <Spin fix v-if="isLoading"></Spin>
+        <Modal width="375" v-model="limitModal" footer-hide>
+            <div class="limit">
+                <h2 class="tit">提示信息</h2>
+                <p class="word">只能导出近90天的数据</p>
+                <Button type="primary" @click="exportData">确定</Button>
+                <Button class="ml_10" @click="limitModal = false">取消</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import {formate} from '../common/utils.js'
 export default {
   data() {
@@ -54,7 +63,17 @@ export default {
         regDate: '',
         totalPage: 0,
         customList: [],
-        isLoading: false
+        limitModal: true,
+        regLimit: {
+            disabledDate (date) {
+                return date && date.valueOf() > Date.now() ;
+            }
+        },
+        recentLimit: {
+            disabledDate (date) {
+                return date && date.valueOf() > Date.now() ;
+            }
+        }
     };
   },
   mounted(){
@@ -76,8 +95,15 @@ export default {
             }
             },()=>{
                 this.$Message.error('查询失败')
-            })
+        })
     },
+    pageChange(num){
+
+    },
+    exportData(){
+        
+    },
+    ...mapActions(['isLoading'])
   }
 };
 </script>
@@ -90,6 +116,7 @@ export default {
         display: flex;
         li{
             margin-right:50px;
+            color: #222;
         }
     }
     .table-box{
@@ -98,11 +125,23 @@ export default {
             th{border: 0}
         }
         td{padding:16px;}
-        th{padding:16px;}
+        th{padding:16px;color:#222;}
     }
     .pages{
         text-align: center;
         margin-top: 30px; 
     }
+    
 }
+.limit{
+    padding: 5px 14px; 
+    .tit{
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+    .word{
+        font-size:12px;
+         margin-bottom: 20px;
+    }
+    }
 </style>

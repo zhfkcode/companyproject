@@ -3,11 +3,12 @@
         <ul class="filter-box">
             <li>
                 <label class="mr_10">账号</label>
-                 <Input v-model="account" placeholder="Enter something..." style="width: 200px" />
+                 <Input v-model="account" placeholder=" 请输入账号" style="width: 200px" />
             </li>
             <li>
                 <label class="mr_10">消费类型</label>
                  <Select v-model="type" style="width:200px">
+                    <Option value="0">全部</Option>
                     <Option value="1" >1</Option>
                     <Option value="2" >2</Option>
                     <Option value="3" >3</Option>
@@ -15,7 +16,7 @@
             </li>
             <li>
                 <label class="mr_10">时间</label>
-                 <DatePicker v-model="date" type="daterange" format="yyyy-MM-dd" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+                 <DatePicker v-model="date" :options="dateRange" type="daterange" format="yyyy-MM-dd" placement="bottom-end" placeholder="请选择时间范围" style="width: 200px"></DatePicker>
             </li>
             <li>
                  <Button type="primary" @click="search">查询</Button>
@@ -38,30 +39,34 @@
             </table>
         </div>
         <div class="pages">
-            <Page :total="totalPage" show-total show-elevator on-change/>
+            <Page :total="totalPage" show-total show-elevator @on-change="pageChange"/>
         </div>
-         <Spin fix v-if="isLoading"></Spin>
+         <!-- <Spin fix v-if="isLoading"></Spin> -->
     </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import {formate} from '../common/utils.js'
 export default {
   data() {
     return {
         account: '',
-        type: '',
+        type: '0',
         date:'',
         costList: [],
         totalPage: 0,
-        isLoading: false
+        dateRange: {
+            disabledDate (date) {
+                return date && date.valueOf() > Date.now() ;
+            }
+        }
     };
   },
   created(){
-  
   },
   mounted(){
-     
+     console.log('mouted')
       let mock = [{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},{acct:'1888655565',money: 555, record: '黑号查询', date: '2016-10-12 12:20:35'},]
       this.costList = mock
   },
@@ -80,6 +85,10 @@ export default {
                 this.$Message.error('查询失败')
             })
     },
+    pageChange(num){
+        
+    },
+    ...mapActions(['isLoading'])
    }
 };
 </script>
@@ -92,6 +101,7 @@ export default {
         display: flex;
         li{
             margin-right:50px;
+            label{color:#222;}
         }
     }
     .table-box{
@@ -100,7 +110,7 @@ export default {
             th{border: 0}
         }
         td{padding:16px;}
-        th{padding:16px;}
+        th{padding:16px;color:#222;}
     }
     .pages{
         text-align: center;

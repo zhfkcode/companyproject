@@ -72,5 +72,12 @@ table td {border: 1px solid #CCCCCC;}
     color: #FFA200;
     background: transparent!important;
 }
+.aside-menu .ivu-menu-dark.ivu-menu-vertical .ivu-menu-opened .ivu-menu-submenu-title{
+    background: transparent;
+}
+.aside-menu .ivu-menu-dark.ivu-menu-vertical .ivu-menu-item:hover,
+.aside-menu .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title:hover{
+        background: #393D49;
+}
 
  

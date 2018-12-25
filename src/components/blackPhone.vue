@@ -3,14 +3,13 @@
         <ul class="filter-box">
             <li>
                 <label class="mr_10">提交账号</label>
-                 <Input v-model="account" placeholder="Enter something..." style="width: 200px" />
+                 <Input v-model="account" placeholder="请选择账号" style="width: 200px" />
             </li>
             <li>
                 <label class="mr_10">提交账号</label>
                  <Select v-model="type" style="width:200px">
-                    <Option value="1" >1</Option>
-                    <Option value="2" >2</Option>
-                    <Option value="3" >3</Option>
+                    <Option value="1">旺旺号</Option>
+                    <Option value="2">手机号</Option>
                 </Select>
             </li>
             <li>
@@ -41,20 +40,20 @@
             </table>
         </div>
         <div class="pages">
-            <Page :total="totalPage" show-total show-elevator/>
+            <Page :total="totalPage" show-total show-elevator @on-change="pageChange"/>
         </div>
     </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data() {
     return {
         account: '',
-        type: '',
+        type: '1',
         hPhoneList: [],
-         totalPage: 0,
-        isLoading: false
+        totalPage: 0,
     };
   },
   mounted(){
@@ -81,7 +80,11 @@ export default {
     },
     repRefuse(){
         
-    }
+    },
+    pageChange (name){
+
+    },
+    ...mapActions(['isLoading'])
   }
 };
 </script>

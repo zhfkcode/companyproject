@@ -15,22 +15,32 @@ const router =new Router({
     {
       path: '/',
       name: 'home',
+      redirect: '/costDetail',
       component: Home,
       children:[
         {
           path:'/costDetail',
           name: 'costDetail',
-          component: CostDetail
+          component: CostDetail,
+          meta: {
+            title: '话费明细'
+          }
         },
         {
           path: '/customMan',
           name: 'customMan',
-          component: CustomMan
+          component: CustomMan,
+           meta: {
+             title: '客户管理'
+           }
         },
         {
           path: '/blankPhone',
           name: 'blankPhone',
-          component: BlankPhone
+          component: BlankPhone,
+           meta: {
+             title: '黑号审核'
+           }
         },
       ]
     },

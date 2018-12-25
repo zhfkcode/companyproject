@@ -10,7 +10,7 @@
           欢迎您
           <span class="ml_10">{{userName}}</span>
         </li>
-        <li>
+        <li @click="logout">
           <img src="../assets/images/out.png" alt="">
           <span class="ml_10">退出</span>
         </li>
@@ -20,27 +20,27 @@
         <Layout class="layout">
             <Sider hide-trigger class="aside-menu">
               <div>
-              <Menu accordion theme="dark"  width="auto" active-name="话费明细" :open-names="['sys-cost']" @on-select="selectMenu">
-                <Submenu name="sys-cost">
+              <Menu accordion ref="slideMenu" theme="dark"  width="auto" :active-name="activeName" :open-names="[openNames]" >
+                <Submenu name="sys-costDetail">
                   <template slot="title">
-                    <Icon type="ios-paper" />
+                    <i class="icon cost"></i>
                     充值系统
                   </template>
-                  <MenuItem  name="话费明细" to="costDetail">话费明细</MenuItem>
+                  <MenuItem  name="costDetail" to="costDetail">话费明细</MenuItem>
                 </Submenu>
-                <Submenu name="sys-custom">
+                <Submenu name="sys-customMan">
                   <template slot="title">
-                    <Icon type="ios-paper" />
+                    <i class="icon user"></i>
                     客户管理
                   </template>
-                  <MenuItem  name="客户管理" to="customMan" >客户管理</MenuItem>
+                  <MenuItem  name="customMan" to="customMan" >客户管理</MenuItem>
                 </Submenu>
-                <Submenu name="sys-hphone">
+                <Submenu name="sys-blankPhone">
                   <template slot="title">
-                    <Icon type="ios-paper" />
+                    <i class="icon check"></i>
                     黑号审核
                   </template>
-                  <MenuItem  name="黑号审核" to="blankPhone">黑号审核</MenuItem>
+                  <MenuItem  name="blankPhone" to="blankPhone">黑号审核</MenuItem>
                 </Submenu>
               </Menu>
               </div>
@@ -51,9 +51,13 @@
                   <span class="title">{{innerTtitle}}</span>
                 </Header>
                 <Content class="inn-cont">
-                  <!-- <keep-alive> -->
+                   <Spin fix v-if="isLoading">
+                      <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
+                      <div>Loading</div>
+                   </Spin>
+                  <keep-alive>
                    <router-view></router-view>
-                  <!-- </keep-alive> -->
+                  </keep-alive>
                 </Content>
                 <Footer class="inn-footer">copyright © 2018 查权重 All rights Reserved</Footer>
               </Layout>
@@ -65,22 +69,40 @@
 
 <script>
 // @ is an alias to /src
+import {mapState} from 'vuex'
 export default {
   name: "home",
   data(){
     return {
       userName: '',
       innerTtitle: '话费明细',
+      activeName: '',
+      openNames: '',
     }
+  },
+  computed:{
+    ...mapState(['isLoading'])
   },
   created(){
     this.userName = localStorage.getItem('user')
+    // this.$store.dispatch('isLoading',true)
+  },
+  mounted(){
+    let routerName = this.$route.name;
+    this.activeName = routerName;
+    this.openNames = 'sys-' + routerName;
+    this.innerTtitle =  this.$route.meta.title
+    this.$nextTick(()=>{
+      this.$refs.slideMenu.updateOpened();
+      this.$refs.slideMenu.updateActiveName();
+    })
   },
   methods:{
-    selectMenu(name){
-      this.innerTtitle = name;
+    logout(){
+      localStorage.clear()
+      this.$router.push('/login')
     }
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -128,6 +150,19 @@ export default {
       height: 100%;
       .aside-menu{
         background: #282B33;
+        .icon{
+            display: inline-block;
+            width:16px;
+            height: 16px;
+            background: url(../assets/images/recharge.png) no-repeat 0 0;
+            vertical-align: middle;
+        }
+        .user{
+          background-image: url(../assets/images/users.png)
+        }
+        .check{
+          background-image: url(../assets/images/check.png)
+        }
       }
       .inner-layout{
         height: 100%;
@@ -146,6 +181,9 @@ export default {
         .inn-cont{
           margin:16px 16px 28px;
           background: #fff;
+            .demo-spin-icon-load{
+              animation: ani-demo-spin 1s linear infinite;
+            }
         }
         .inn-footer{
           padding:18px 40px;
@@ -155,6 +193,11 @@ export default {
       }
     }
   }
+}
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
 }
 </style>
 
