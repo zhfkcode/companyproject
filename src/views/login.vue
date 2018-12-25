@@ -54,26 +54,27 @@ export default {
             }
         this.logErr = false //影藏错误提示
         this.axios.post('/api/v1/user/login',{
-            user:this.user,
-            pwd: this.pwd
+            account:this.user,
+            password: this.pwd
         })
         .then((response) => {
-            if(this.response.data.code==200){
+            if(response.data.code==200){
                 this.$Message.success('登陆成功')
                 localStorage.setItem('token',response.data.data.token)
                 localStorage.setItem('user',this.user)
                 let redPath = this.$route.query.redirect
+                console.log(redPath);
                 if(redPath){
-                    this.$route.replace({
+                    this.$router.replace({
                         path:redPath
                     })
                 }else{
-                    this.$route.push({
+                    this.$router.push({
                         path:'/'
                     })
                 }
                 
-            }else if(this.response.data.code==400){
+            }else if(response.data.code==400){
                 this.$Message.error('用户名密码错误')
                 this.logErr = true
             }

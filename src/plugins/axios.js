@@ -35,9 +35,10 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
   function(response) {
-   if(response.data.code == 404){
+   if(response.data.code == 2030){
+     console.log(response,'laizhel')
      localStorage.removeItem('token')
-    router.replace({
+      router.replace({
       path: '/login',
       query: {
         redirect: router.currentRoute.fullPath

@@ -21,13 +21,13 @@
             <Sider hide-trigger class="aside-menu">
               <div>
               <Menu accordion ref="slideMenu" theme="dark"  width="auto" :active-name="activeName" :open-names="[openNames]" >
-                <Submenu name="sys-costDetail">
+                <!-- <Submenu name="sys-costDetail">
                   <template slot="title">
                     <i class="icon cost"></i>
                     充值系统
                   </template>
                   <MenuItem  name="costDetail" to="costDetail">话费明细</MenuItem>
-                </Submenu>
+                </Submenu> -->
                 <Submenu name="sys-customMan">
                   <template slot="title">
                     <i class="icon user"></i>
@@ -99,7 +99,7 @@ export default {
   },
   methods:{
     logout(){
-      localStorage.clear()
+      // localStorage.clear()
       this.$router.push('/login')
     }
   }

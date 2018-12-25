@@ -6,14 +6,14 @@ module.exports = {
         .set('@', resolve('src'))
         .set('components', resolve('src/components'))
         .set('views', resolve('src/views'))
+    },
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://192.168.0.9:8889/',
+                ws:true,
+                changeOrigin: true
+            }
+        }
     }
-    // devServer: {
-    //     proxy: {
-    //         '/api': {
-    //             target: '',
-    //             ws:true,
-    //             changeOrigin: true
-    //         }
-    //     }
-    // }
 }

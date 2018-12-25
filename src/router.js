@@ -15,17 +15,17 @@ const router =new Router({
     {
       path: '/',
       name: 'home',
-      redirect: '/costDetail',
+      redirect: '/customMan',
       component: Home,
       children:[
-        {
-          path:'/costDetail',
-          name: 'costDetail',
-          component: CostDetail,
-          meta: {
-            title: '话费明细'
-          }
-        },
+        // {
+        //   path:'/costDetail',
+        //   name: 'costDetail',
+        //   component: CostDetail,
+        //   meta: {
+        //     title: '话费明细'
+        //   }
+        // },
         {
           path: '/customMan',
           name: 'customMan',
@@ -52,28 +52,27 @@ const router =new Router({
         requiresAuth: true
       }
     },
-    {
-      path: '/about',
-      name: 'about',
+    // {
+      // path: '/about',
+      // name: 'about',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
+      // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    // }
   ]
 })
-// router.beforeEach((to,form, next)=>{
-//   let token = localStorage.getItem('token')
-//   console.log(to.meta.requiresAuth)
-//   if (!to.meta.requiresAuth && !token) {
-//     next({
-//       path:'/login',
-//       query: {
-//         redirect: to.fullPath
-//       }
-//     })
-//   }else{
-//     next()
-//   }
-// })
+router.beforeEach((to,form, next)=>{
+  let token = localStorage.getItem('token')
+  if (!to.meta.requiresAuth && !token) {
+    next({
+      path:'/login',
+      query: {
+        redirect: to.fullPath
+      }
+    })
+  }else{
+    next()
+  }
+})
 export default router

@@ -41,7 +41,7 @@
         <div class="pages">
             <Page :total="totalPage" show-total show-elevator @on-change="pageChange"/>
         </div>
-         <!-- <Spin fix v-if="isLoading"></Spin> -->
+
     </div>
 </template>
 
